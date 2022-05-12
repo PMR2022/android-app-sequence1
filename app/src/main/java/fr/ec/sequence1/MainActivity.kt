@@ -33,9 +33,20 @@ class MainActivity : AppCompatActivity() {
 
         override fun getItemCount(): Int = dataSet.size
 
+        override fun getItemViewType(position: Int): Int {
+            return if(position == 0)HEADER_ITEM_ID else ITEM_ID
+        }
+
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
             val itemView =
-                LayoutInflater.from(parent.context).inflate(R.layout.item_layout, parent, false)
+                if(viewType == HEADER_ITEM_ID) {
+                    LayoutInflater.from(parent.context).inflate(R.layout.item_header_layout, parent, false)
+
+                }else {
+                    LayoutInflater.from(parent.context).inflate(R.layout.item_layout, parent, false)
+
+                }
+
             return ItemViewHolder(itemView = itemView)
         }
 
@@ -44,6 +55,11 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    companion object {
+        const val HEADER_ITEM_ID = 0
+        const val ITEM_ID = 1
     }
 
     fun provideDataSet(): List<Item> {
