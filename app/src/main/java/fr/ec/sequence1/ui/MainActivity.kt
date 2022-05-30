@@ -47,12 +47,15 @@ class MainActivity : AppCompatActivity() {
             val posts = DataProvider.getPosts()
 
             Log.d("MainActivity", "End")
-            val items = posts.map { postResponse ->
-                ListItem.Item(
-                    imageRes = 0,
-                    title = postResponse.name,
-                    subTitle = ""
-                )
+
+            val items = withContext(Dispatchers.Default) {
+                 posts.map { postResponse ->
+                    ListItem.Item(
+                        imageUrl = postResponse.thumbnail.imageUrl,
+                        title = postResponse.name,
+                        subTitle = postResponse.tagline
+                    )
+                }
             }
 
             adapter.display(items)

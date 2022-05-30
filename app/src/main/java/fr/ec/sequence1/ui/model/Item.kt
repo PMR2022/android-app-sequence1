@@ -9,7 +9,7 @@ sealed class ListItem {
     ) : ListItem()
 
     data class Item(
-        val imageRes: Int,
+        val imageUrl: String,
         val title: String,
         val subTitle: String
     ) : ListItem()
