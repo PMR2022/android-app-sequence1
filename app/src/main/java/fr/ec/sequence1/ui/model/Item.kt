@@ -1,7 +1,16 @@
 package fr.ec.sequence1.ui.model
 
-data class Item(
-    val imageRes: Int,
-    val title: String,
-    val subTitle: String
-)
+sealed class ListItem {
+    data class Header(
+        val imageRes: Int,
+        val title: String,
+        val subTitle: String,
+        val description : String
+    ) : ListItem()
+
+    data class Item(
+        val imageRes: Int,
+        val title: String,
+        val subTitle: String
+    ) : ListItem()
+}
