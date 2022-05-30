@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import fr.ec.sequence1.R
+import fr.ec.sequence1.data.PostResponse
 import fr.ec.sequence1.ui.model.ListItem
 import java.lang.IllegalArgumentException
 
 class ItemAdapter(
-    private val dataSet: List<ListItem>
+    private val dataSet: MutableList<ListItem>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int = dataSet.size
@@ -46,6 +47,11 @@ class ItemAdapter(
             throw IllegalArgumentException()
         }
 
+    }
+
+    fun display(posts: List<ListItem>) {
+        dataSet.addAll(posts)
+        notifyDataSetChanged()
     }
 
     companion object {
