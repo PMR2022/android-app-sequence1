@@ -10,6 +10,7 @@ import fr.ec.sequence1.R
 import fr.ec.sequence1.data.DataProvider
 import fr.ec.sequence1.ui.adapter.ItemAdapter
 import fr.ec.sequence1.ui.model.ListItem
+import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,11 +29,24 @@ class MainActivity : AppCompatActivity() {
         list.layoutManager = LinearLayoutManager(this, VERTICAL, false)
     }
 
+    private val mainActivityScope = CoroutineScope(
+        SupervisorJob() + Dispatchers.Main
+    )
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mainActivityScope.cancel()
+    }
+
     private fun loadPosts() {
 
-        Thread {
+        mainActivityScope.launch {
+
+            Log.d("MainActivity", "Start")
+
             val posts = DataProvider.getPosts()
 
+            Log.d("MainActivity", "End")
             val items = posts.map { postResponse ->
                 ListItem.Item(
                     imageRes = 0,
@@ -40,10 +54,9 @@ class MainActivity : AppCompatActivity() {
                     subTitle = ""
                 )
             }
-            Log.d("MainActivity", "Product hunt response: $posts")
-            this.runOnUiThread{
-                adapter.display(items)
-            }
-        }.start()
+
+            adapter.display(items)
+
+        }
     }
 }

@@ -1,6 +1,12 @@
 package fr.ec.sequence1.data
 
 import com.google.gson.Gson
+import fr.ec.sequence1.data.api.ProductHuntService
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import java.io.BufferedReader
 import java.net.HttpURLConnection
 import java.net.URL
@@ -9,16 +15,18 @@ object DataProvider {
     private val POST_API_URL =
         "https://api.producthunt.com/v1/posts?access_token=45f13bcd50dc73c343a53c55af0d150dabd1dac4d6b035a6d2265ed5e85e0e81"
 
+
+
     val gson = Gson()
 
-    fun getPosts() :  List<PostResponse> {
+    suspend fun getPosts() :  List<PostResponse> = withContext(Dispatchers.Default)  {
         val json = makeCall()
 
-        return gson.fromJson(json,PostsResponse::class.java).posts
+        gson.fromJson(json,PostsResponse::class.java).posts
     }
 
 
-     private fun makeCall(): String? {
+     private suspend fun makeCall(): String? =  withContext(Dispatchers.IO) {
         var urlConnection: HttpURLConnection? = null
         var reader: BufferedReader? = null
         try {
@@ -27,7 +35,7 @@ object DataProvider {
             urlConnection.connect()
 
             reader = urlConnection.inputStream?.bufferedReader()
-            return reader?.readText()
+             reader?.readText()
 
         } finally {
             urlConnection?.disconnect()
