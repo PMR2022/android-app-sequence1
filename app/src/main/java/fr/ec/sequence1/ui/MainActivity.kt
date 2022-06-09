@@ -15,6 +15,7 @@ import kotlinx.coroutines.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var adapter: ItemAdapter
+    private val dataProvider : DataProvider = DataProvider(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -44,16 +45,16 @@ class MainActivity : AppCompatActivity() {
 
             Log.d("MainActivity", "Start")
 
-            val posts = DataProvider.getPosts()
+            val posts = dataProvider.getPosts()
 
             Log.d("MainActivity", "End")
 
             val items = withContext(Dispatchers.Default) {
-                 posts.map { postResponse ->
+                 posts.map { post ->
                     ListItem.Item(
-                        imageUrl = postResponse.thumbnail.imageUrl,
-                        title = postResponse.name,
-                        subTitle = postResponse.tagline
+                        imageUrl = post.imageUrl,
+                        title = post.title,
+                        subTitle = post.subtitle
                     )
                 }
             }

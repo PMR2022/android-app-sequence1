@@ -1,11 +1,9 @@
 package fr.ec.sequence1.ui.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import fr.ec.sequence1.R
-import fr.ec.sequence1.data.PostResponse
 import fr.ec.sequence1.ui.model.ListItem
 import java.lang.IllegalArgumentException
 

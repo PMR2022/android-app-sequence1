@@ -1,7 +1,5 @@
 package fr.ec.sequence1.data.api
 
-import fr.ec.sequence1.data.PostsResponse
-import retrofit2.Call
 import retrofit2.http.GET
 
 interface ProductHuntService {

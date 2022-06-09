@@ -1,9 +1,9 @@
-package fr.ec.sequence1.data
+package fr.ec.sequence1.data.api
 
 
 data class PostResponse(
     val id : Long,
     val name : String,
     val tagline : String,
-    val thumbnail : Thumbnail
+    val thumbnail : ThumbnailResponse
     )
