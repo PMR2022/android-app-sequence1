@@ -2,6 +2,7 @@ package fr.ec.sequence1.data.database
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.sqlite.SQLiteDatabase.CONFLICT_REPLACE
 import fr.ec.sequence1.data.Post
 
 class PostDao(context: Context) {
@@ -10,10 +11,11 @@ class PostDao(context: Context) {
 
     fun save(post: Post): Long {
         return productHuntDbHelper.writableDatabase
-            .insert(
+            .insertWithOnConflict(
                 DataBaseContract.PostTable.TABLE_NAME,
                 null,
-                post.toContentValues()
+                post.toContentValues(),
+                CONFLICT_REPLACE
             )
     }
 
