@@ -18,8 +18,9 @@ import kotlinx.coroutines.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var adapter: ItemAdapter
-    private lateinit var loader : ProgressBar
-    private val dataProvider : DataProvider = DataProvider(this)
+    private lateinit var loader: ProgressBar
+    private val dataProvider: DataProvider by lazy { DataProvider(this.application) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -66,9 +67,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun getPosts() : List<ListItem.Item>{
+    private suspend fun getPosts(): List<ListItem.Item> {
         val posts = dataProvider.getPosts()
-      return  withContext(Dispatchers.Default) {
+        return withContext(Dispatchers.Default) {
             posts.map { post ->
                 ListItem.Item(
                     imageUrl = post.imageUrl,
